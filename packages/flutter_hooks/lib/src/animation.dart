@@ -267,8 +267,8 @@ class _MultiTickerProviderHookState
   Ticker createTicker(TickerCallback onTick) {
     final ticker = Ticker(onTick, debugLabel: 'created by $context (multi)');
     _updateTickerModeNotifier();
-    _updateTickers();
     _tickers.add(ticker);
+    _updateTickers();
     return ticker;
   }
 

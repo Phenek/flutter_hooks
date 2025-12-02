@@ -103,6 +103,32 @@ void main() {
     }
   });
 
+  testWidgets('new tickers created when TickerMode disabled are muted', (tester) async {
+    late TickerProvider provider;
+
+    await tester.pumpWidget(TickerMode(
+      enabled: false,
+      child: HookBuilder(builder: (context) {
+        provider = useMultiTickerProvider();
+        return Container();
+      }),
+    ));
+
+    final animationController = AnimationController(
+      vsync: provider,
+      duration: const Duration(seconds: 1),
+    );
+
+    // Attempt to start the animation — when the underlying ticker is muted
+    // (because TickerMode is disabled), the controller should not advance.
+    unawaited(animationController.forward());
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(animationController.value, equals(0.0));
+
+    animationController.dispose();
+  });
+
   testWidgets('useMultiTickerProvider pass down keys', (tester) async {
     late TickerProvider provider;
     List<Object?>? keys;
