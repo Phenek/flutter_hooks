@@ -241,7 +241,7 @@ class _TickerProviderHookState
 /// Creates a multi-usage [TickerProvider].
 ///
 /// See also:
-///  * [SingleTickerProviderStateMixin]
+///  * [TickerProviderStateMixin]
 TickerProvider useMultiTickerProvider({List<Object?>? keys}) {
   return use(
     keys != null

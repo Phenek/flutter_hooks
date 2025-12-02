@@ -20,9 +20,7 @@ void main() {
     final element = tester.element(find.byType(HookBuilder));
 
     expect(
-      element
-          .toDiagnosticsNode(style: DiagnosticsTreeStyle.offstage)
-          .toStringDeep(),
+      element.toDiagnosticsNode(style: DiagnosticsTreeStyle.offstage).toStringDeep(),
       equalsIgnoringHashCodes(
         'HookBuilder\n'
         ' │ useMultiTickerProvider\n'
@@ -46,6 +44,7 @@ void main() {
       vsync: provider,
       duration: const Duration(seconds: 1),
     );
+    // With a multi provider, creating additional AnimationControllers is allowed.
     final animationControllerB = AnimationController(
       vsync: provider,
       duration: const Duration(seconds: 1),
@@ -53,12 +52,6 @@ void main() {
 
     unawaited(animationControllerA.forward());
     unawaited(animationControllerB.forward());
-
-    // With a multi provider, creating additional AnimationControllers is allowed.
-    expect(
-      () => AnimationController(vsync: provider, duration: const Duration(seconds: 1)),
-      returnsNormally,
-    );
 
     animationControllerA.dispose();
     animationControllerB.dispose();
